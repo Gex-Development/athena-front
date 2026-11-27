@@ -5,7 +5,7 @@ import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
-  { ignores: ['dist', 'coverage', 'src/astryx-themes.ts', 'src/themes/*/*.js', 'src/themes/*/*.d.ts'] },
+  { ignores: ['dist', 'coverage', 'src/astryx-themes.ts', 'src/themes/*/*.js', 'src/themes/*/*.d.ts', 'src/componentes/mascote/*.js'] },
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
