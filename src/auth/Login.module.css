@@ -1,7 +1,9 @@
 .pagina {
+  position: relative;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   background:
     radial-gradient(55% 45% at 50% 0%, var(--gex-hero-brilho), transparent 70%),
     linear-gradient(
@@ -17,6 +19,8 @@
 }
 
 .barra {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -40,61 +44,71 @@
 .nomePeca {
   font-size: 15px;
   font-weight: 600;
-  color: var(--gex-hero-text);
 }
 
 .centro {
+  position: relative;
+  z-index: 1;
   flex: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 32px;
 }
 
-.conteudo {
+.cartao {
   width: 100%;
-  max-width: 420px;
+  max-width: 400px;
+  animation: subir 0.6s ease both;
+}
+
+.cabecalho {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-}
-
-.eyebrow {
-  font-family: var(--font-family-code);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gex-hero-text-muted);
+  align-items: center;
+  text-align: center;
+  gap: 4px;
 }
 
 .titulo {
-  font-size: 36px;
   font-weight: 500;
   letter-spacing: -0.03em;
-  line-height: 1.1;
-  color: var(--gex-hero-text);
 }
 
-.descricao {
+.botaoGoogle :is(a, button) {
+  background: var(--gex-botao-claro);
+  color: var(--gex-botao-claro-texto);
+  border-color: transparent;
+}
+
+.botaoGoogle :is(a, button):hover {
+  background: var(--gex-botao-claro-hover);
+}
+
+.lema {
+  min-height: 24px;
   font-size: 13.5px;
-  line-height: 1.5;
-  color: var(--gex-hero-text-muted);
-}
-
-.vidro {
-  background: var(--gex-glass);
-  border: 1px solid var(--gex-glass-border);
-  border-radius: 22px;
-  backdrop-filter: blur(12px);
-  padding: 20px 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.nota {
-  font-size: 12px;
-  line-height: 1.5;
   color: var(--gex-hero-text-muted);
   text-align: center;
+}
+
+.lema span {
+  display: block;
+  animation: lema 4.2s ease both;
+}
+
+@keyframes subir {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes lema {
+  0% { opacity: 0; transform: translateY(6px); }
+  12%, 88% { opacity: 1; transform: none; }
+  100% { opacity: 0; transform: translateY(-6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cartao, .lema span { animation: none; }
 }
