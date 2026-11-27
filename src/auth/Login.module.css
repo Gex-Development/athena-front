@@ -1,0 +1,100 @@
+.pagina {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(55% 45% at 50% 0%, var(--gex-hero-brilho), transparent 70%),
+    linear-gradient(
+      180deg,
+      var(--gex-hero-1) 0%,
+      var(--gex-hero-2) 34%,
+      var(--gex-hero-3) 52%,
+      var(--gex-hero-4) 80%,
+      var(--gex-hero-5) 100%
+    );
+  color: var(--gex-hero-text);
+  padding: 24px 16px;
+}
+
+.barra {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  align-self: center;
+  width: 100%;
+  max-width: 960px;
+}
+
+.logo {
+  height: 22px;
+  width: auto;
+  display: block;
+}
+
+.divisor {
+  width: 1px;
+  height: 18px;
+  background: var(--gex-divisor-hero);
+}
+
+.nomePeca {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--gex-hero-text);
+}
+
+.centro {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.conteudo {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.eyebrow {
+  font-family: var(--font-family-code);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gex-hero-text-muted);
+}
+
+.titulo {
+  font-size: 36px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--gex-hero-text);
+}
+
+.descricao {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--gex-hero-text-muted);
+}
+
+.vidro {
+  background: var(--gex-glass);
+  border: 1px solid var(--gex-glass-border);
+  border-radius: 22px;
+  backdrop-filter: blur(12px);
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.nota {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--gex-hero-text-muted);
+  text-align: center;
+}

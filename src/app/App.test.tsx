@@ -28,13 +28,14 @@ test('login leva ao Google', () => {
 
   const botao = screen.getByRole('link', { name: 'Entrar com Google' })
   expect(botao.getAttribute('href')).toBe('/v1/auth/google/start')
-  expect(screen.queryByText('Use sua conta da GEX')).toBeNull()
+  expect(screen.queryByText('Use Sua Conta da GEX')).toBeNull()
+  expect(screen.getByRole('img', { name: 'GEX' })).toBeTruthy()
 })
 
 test('login avisa quando a conta não é da GEX', () => {
   abrir('/login?erro=dominio')
 
-  expect(screen.getByText('Use sua conta da GEX')).toBeTruthy()
+  expect(screen.getByText('Use Sua Conta da GEX')).toBeTruthy()
 })
 
 test('inicio sem sessão vai para o login', async () => {
