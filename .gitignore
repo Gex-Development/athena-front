@@ -155,3 +155,9 @@ vite.config.ts.timestamp-*
 .nx/cache
 .nx/workspace-data
 .nx/migrate-runs
+
+src/themes/gex/gex.css
+src/themes/gex/gex.css.d.ts
+src/themes/gex/gex.d.ts
+src/themes/gex/gex.js
+src/themes/gex/gex.variants.d.ts
