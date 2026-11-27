@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
 import { afterEach, expect, test, vi } from 'vitest'
 import { App } from './App.tsx'
@@ -36,6 +36,33 @@ test('login avisa quando a conta não é da GEX', () => {
   abrir('/login?erro=dominio')
 
   expect(screen.getByText('Use Sua Conta da GEX')).toBeTruthy()
+})
+
+test('magic link recusa e-mail inválido sem chamar o backend', async () => {
+  const chamada = vi.fn()
+  vi.stubGlobal('fetch', chamada)
+  abrir('/login')
+
+  fireEvent.change(screen.getByLabelText('E-mail'), { target: { value: 'nao-e-email' } })
+  fireEvent.click(screen.getByRole('button', { name: 'Receber Link de Acesso' }))
+
+  expect(await screen.findByText('Digite um e-mail válido.')).toBeTruthy()
+  expect(chamada).not.toHaveBeenCalled()
+})
+
+test('magic link enviado mostra a confirmação', async () => {
+  const chamada = vi.fn(async () => new Response(null, { status: 204 }))
+  vi.stubGlobal('fetch', chamada)
+  abrir('/login')
+
+  fireEvent.change(screen.getByLabelText('E-mail'), { target: { value: 'Maria@GexCorp.com.br' } })
+  fireEvent.click(screen.getByRole('button', { name: 'Receber Link de Acesso' }))
+
+  expect(await screen.findByText('Link Enviado')).toBeTruthy()
+  expect(chamada).toHaveBeenCalledWith(
+    '/v1/auth/magic-link',
+    expect.objectContaining({ method: 'POST', body: JSON.stringify({ email: 'maria@gexcorp.com.br' }) }),
+  )
 })
 
 test('inicio sem sessão vai para o login', async () => {
