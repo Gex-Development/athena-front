@@ -7,18 +7,29 @@
     "node": ">=24"
   },
   "scripts": {
+    "theme": "astryx theme build src/themes/gex/gexTheme.ts",
+    "predev": "npm run theme",
     "dev": "vite",
+    "prebuild": "npm run theme",
     "build": "tsc -b && vite build",
+    "prelint": "npm run theme",
     "lint": "eslint .",
+    "pretest": "npm run theme",
     "test": "vitest run",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@astryxdesign/core": "0.7.17",
+    "@astryxdesign/theme-neutral": "0.7.17",
+    "@fontsource-variable/geist": "5.3.0",
+    "@fontsource-variable/geist-mono": "5.3.0",
+    "@stylexjs/stylex": "0.19.2",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "react-router": "8.5.3"
   },
   "devDependencies": {
+    "@astryxdesign/cli": "0.7.17",
     "@eslint/js": "10.0.1",
     "@testing-library/dom": "10.4.2",
     "@testing-library/react": "16.3.3",

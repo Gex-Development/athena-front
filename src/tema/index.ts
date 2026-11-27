@@ -1,1 +1,1 @@
-export {};
+export { TemaGex } from './TemaGex.tsx'
