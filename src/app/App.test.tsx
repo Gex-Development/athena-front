@@ -1,14 +1,62 @@
-import { render, screen } from '@testing-library/react'
+import { cleanup, render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
-import { expect, test } from 'vitest'
+import { afterEach, expect, test, vi } from 'vitest'
 import { App } from './App.tsx'
 
-test('rota inicial renderiza Athena', () => {
+function abrir(rota: string) {
   render(
-    <MemoryRouter initialEntries={['/']}>
+    <MemoryRouter initialEntries={[rota]}>
       <App />
     </MemoryRouter>,
   )
+}
 
-  expect(screen.getByRole('main').textContent).toBe('Athena')
+function responderMe(status: number, corpo?: object) {
+  vi.stubGlobal(
+    'fetch',
+    vi.fn(async () => new Response(corpo ? JSON.stringify(corpo) : null, { status })),
+  )
+}
+
+afterEach(() => {
+  cleanup()
+  vi.unstubAllGlobals()
+})
+
+test('login leva ao Google', () => {
+  abrir('/login')
+
+  const botao = screen.getByRole('link', { name: 'Entrar com Google' })
+  expect(botao.getAttribute('href')).toBe('/v1/auth/google/start')
+  expect(screen.queryByText('Use sua conta da GEX')).toBeNull()
+})
+
+test('login avisa quando a conta não é da GEX', () => {
+  abrir('/login?erro=dominio')
+
+  expect(screen.getByText('Use sua conta da GEX')).toBeTruthy()
+})
+
+test('inicio sem sessão vai para o login', async () => {
+  responderMe(401)
+
+  abrir('/')
+
+  expect(await screen.findByRole('link', { name: 'Entrar com Google' })).toBeTruthy()
+})
+
+test('inicio com sessão mostra o usuário e o papel', async () => {
+  responderMe(200, {
+    id: 'maria@gexcorp.com.br',
+    nome: 'Maria Souza',
+    email: 'maria@gexcorp.com.br',
+    papel: 'admin',
+    nomeAssinatura: 'Maria',
+  })
+
+  abrir('/')
+
+  expect(await screen.findByRole('heading', { name: 'Olá, Maria' })).toBeTruthy()
+  expect(screen.getByText('maria@gexcorp.com.br')).toBeTruthy()
+  expect(screen.getByText('Admin')).toBeTruthy()
 })
